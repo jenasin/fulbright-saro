@@ -226,6 +226,39 @@ th { font-weight: 600; }
 
 .host p { font-size: 16px; }
 
+.host-map {
+  margin: 10px 0 8px;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: #ececec;
+}
+
+.host-map iframe {
+  display: block;
+  width: 100%;
+  height: 150px;
+  border: 0;
+}
+
+.host-link {
+  margin: 6px 0 0 0;
+  font-family: var(--sans);
+  font-size: 13.5px;
+}
+
+.host-link a {
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1px;
+  color: var(--navy);
+}
+
+.host-link a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 @media (max-width: 640px) {
   .host-grid { grid-template-columns: 1fr; }
 }
