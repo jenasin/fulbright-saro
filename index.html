@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jan Saro &middot; A Minimum-Viable, Explainable Digital Twin for Dairy Cows</title>
+  <meta name="description"
+        content="Fulbright-Masaryk Postdoctoral project: a hybrid, explainable digital twin for dairy cows using commercially available farm data. Proposed hosts: UW-Madison (Cabrera) or Cornell (Giordano).">
+  <meta name="author" content="Jan Saro, Ph.D., MBA">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%231f3864'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='18' fill='white' text-anchor='middle' font-weight='bold'%3EJS%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<main>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="page-header">
+    <p class="eyebrow">Fulbright&ndash;Masaryk Postdoctoral Fellowship &middot; Project Proposal</p>
+    <h1>A Minimum-Viable, Explainable Digital Twin<br>for Dairy Cows</h1>
+    <p class="subtitle">Using commercially available farm data &middot; four-month research stay in the United States</p>
+
+    <p class="byline">
+      <strong>Jan Saro</strong>, Ph.D., MBA<br>
+      Assistant Professor, Czech University of Life Sciences Prague<br>
+      Junior Researcher, Institute of Information Theory and Automation (&Uacute;TIA), Czech Academy of Sciences
+    </p>
+
+    <nav class="doc-links" aria-label="Application documents">
+      <a href="assets/proposal-wisconsin.pdf">Project Statement &middot; UW&ndash;Madison <span aria-hidden="true">&rarr;</span></a>
+      <a href="assets/proposal-cornell.pdf">Project Statement &middot; Cornell <span aria-hidden="true">&rarr;</span></a>
+      <a href="assets/personal-statement.pdf">Personal Statement <span aria-hidden="true">&rarr;</span></a>
+      <a href="assets/cv.pdf">Curriculum Vitae <span aria-hidden="true">&rarr;</span></a>
+    </nav>
+  </header>
+
+  <!-- ===================== ABSTRACT ===================== -->
+  <section>
+    <h2>Abstract</h2>
+    <p>
+      A peer-reviewed survey of the 2011&ndash;2026 literature shows that an engineering-grade
+      digital twin of an individual dairy cow does not yet exist in commercial practice.
+      What exists are well-developed building blocks &mdash; sensors, cow-level predictive
+      models, herd-level simulators, and decision-support workflows &mdash; that have remained
+      largely disconnected. This project proposes to spend four months at a U.S. host
+      institution building and validating a
+      <em>minimum-viable, hybrid digital twin</em> for dairy cows that runs on data farms
+      already export every day: parlour and AMS logs, milk recording, management events,
+      activity&ndash;rumination collars and weather.
+    </p>
+    <p>
+      The twin does not attempt to replace the farmer. It produces a daily, ranked,
+      explainable worklist of cows to inspect, with reason codes a farmer can act on.
+      The deliverables are a co-authored peer-reviewed paper, an open prototype, a
+      reproducible benchmark over public datasets, and a deployment-ready core that the
+      host institution and Czech partners can build on after the visit ends.
+    </p>
+  </section>
+
+  <!-- ===================== GAP ===================== -->
+  <section>
+    <h2>The gap this project closes</h2>
+    <p>
+      The literature is strong in monitoring and only moderately strong in closed-loop
+      decision-making. No published system fuses these layers into a single workflow that
+    </p>
+    <ul>
+      <li>runs on the data farms already export,</li>
+      <li>prioritises cows under realistic operator constraints,</li>
+      <li>explains the prioritisation in a single sentence a farmer can verify, and</li>
+      <li>has been validated against alert burden, lead time and precision&#8209;at&#8209;top&#8209;<em>k</em>,
+        not AUROC alone.</li>
+    </ul>
+    <p>
+      Closing exactly this gap is what makes a four-month, single-host visit feasible
+      <em>and</em> publishable.
+    </p>
+  </section>
+
+  <!-- ===================== RESEARCH QUESTIONS ===================== -->
+  <section>
+    <h2>Research questions</h2>
+    <ol>
+      <li>What is the minimum data envelope &mdash; among milk / parlour / AMS logs,
+        management records, activity&ndash;rumination collars and weather &mdash; that
+        yields a useful cow-level twin?</li>
+      <li>Does modelling an explicit cow <em>state</em> outperform stand-alone one-shot
+        predictors when the goal is prioritisation, not raw classification?</li>
+      <li>How should herd-level resource constraints (operator time, veterinary slots,
+        treatment budget) shape the cow-level worklist?</li>
+      <li>Which explanation format &mdash; SHAP, reason codes against a cow&rsquo;s own
+        baseline, counterfactual text &mdash; produces actionable, trust-calibrated
+        decisions for a real farmer?</li>
+      <li>How much predictive value can be demonstrated retrospectively, without a long
+        prospective intervention trial?</li>
+    </ol>
+  </section>
+
+  <!-- ===================== METHODOLOGY ===================== -->
+  <section>
+    <h2>Methodology in one page</h2>
+
+    <h3>Three architectures, one primary track</h3>
+    <table>
+      <thead>
+        <tr><th>Architecture</th><th>Minimum inputs</th><th>Evaluation focus</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Simulation-only twin</td>
+          <td>public datasets + literature parameters; no live farm API</td>
+          <td>calibration vs.&nbsp;literature, stability, sensitivity</td>
+        </tr>
+        <tr>
+          <td><strong>Hybrid twin <em>(primary)</em></strong></td>
+          <td>per-milking yield, parity, DIM, calvings, inseminations, treatments,
+              activity, rumination, weather</td>
+          <td>AUROC / PR-AUC, calibration, lead time, alert burden,
+              precision@top-<em>k</em></td>
+        </tr>
+        <tr>
+          <td>Farm-deployable prototype</td>
+          <td>nightly farm export + management records + weather;
+              collars optional</td>
+          <td>prospective utility, time saved, acceptance, false alerts</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Cow state representation</h3>
+    <p>
+      Each cow is represented by a latent state with four components: a
+      <strong>production state</strong> (lactation trajectory residuals), a
+      <strong>perturbation state</strong> (acute deviations in yield, conductivity, flow,
+      rumination), a <strong>fertility state</strong> (oestrus / non-oestrus / pregnant /
+      questionable), and a <strong>risk trajectory</strong> (rolling probability of
+      mastitis, lameness or metabolic disorder). The state is updated daily; the twin
+      emits both a point score and an uncertainty band.
+    </p>
+
+    <h3>Explainability layer</h3>
+    <ul>
+      <li><strong>SHAP</strong> over tree-based models for local and global attribution.</li>
+      <li><strong>Reason codes against the cow&rsquo;s own baseline</strong>, not the herd:
+        &ldquo;rumination &minus;18&nbsp;%&nbsp;vs.&nbsp;7-day mean&rdquo;,
+        &ldquo;rear-quarter milk flow atypically low&rdquo;,
+        &ldquo;two extra refusals&rdquo;.</li>
+      <li><strong>Counterfactual sentences</strong>: &ldquo;if rumination were within band
+        and milking interval shorter, this cow would drop out of today&rsquo;s top 20.&rdquo;</li>
+      <li><strong>Uncertainty banding</strong>: every score is rendered with a
+        &ldquo;screen now / watch / no action&rdquo; category to protect against alert
+        fatigue.</li>
+    </ul>
+  </section>
+
+  <!-- ===================== TIMELINE ===================== -->
+  <section>
+    <h2>Four-month timeline</h2>
+    <table>
+      <thead>
+        <tr><th>Month</th><th>Activities</th><th>Deliverables</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>M1</td>
+          <td>Lock use case; build data dictionary; implement ETL + quality-control
+              pipeline; finalise cow-state schema.</td>
+          <td>Literature matrix, data spec, quality checklist, first twin schema.</td>
+        </tr>
+        <tr>
+          <td>M2</td>
+          <td>Yield-trajectory baseline; 1&ndash;2 disease / risk models;
+              leave-one-farm-out validation; missingness and drift report.</td>
+          <td>Benchmark notebooks, baseline metrics, error analysis.</td>
+        </tr>
+        <tr>
+          <td>M3</td>
+          <td>Herd prioritisation under resource constraints; SHAP / reason codes /
+              counterfactuals; simple dashboard; short-horizon what-if simulations.</td>
+          <td>MVP dashboard, ranked action list, explainability layer.</td>
+        </tr>
+        <tr>
+          <td>M4</td>
+          <td>Compare 2&ndash;3 architectures; evaluate precision@top-<em>k</em>, alert
+              burden, lead time, calibration, simulated workload; write up; submit paper
+              or preprint.</td>
+          <td>Design paper draft, open prototype repository, reproducible benchmark.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===================== HOSTS ===================== -->
+  <section>
+    <h2>Proposed hosts</h2>
+    <div class="host-grid">
+      <article class="host">
+        <h3>Primary <span class="host-tag">UW&ndash;Madison</span></h3>
+        <p>
+          <strong>Prof.&nbsp;Victor&nbsp;E.&nbsp;Cabrera</strong><br>
+          Department of Animal and Dairy Sciences<br>
+          University of Wisconsin&ndash;Madison
+        </p>
+        <p>
+          Cabrera&rsquo;s group develops web-based Markov and decision-support tools for
+          U.S.&nbsp;dairy operations and has long-standing experience in dairy farm
+          economics and herd-structure modelling &mdash; directly adjacent to the
+          herd-level and prioritisation layers of the proposed twin.
+        </p>
+      </article>
+
+      <article class="host">
+        <h3>Secondary <span class="host-tag">Cornell</span></h3>
+        <p>
+          <strong>Prof.&nbsp;Julio&nbsp;O.&nbsp;Giordano</strong><br>
+          Department of Animal Science<br>
+          Cornell University
+        </p>
+        <p>
+          Giordano&rsquo;s group sits at the intersection of dairy management
+          decision-making, reproductive programmes and sensor data in commercial herds
+          &mdash; an applied environment that fits the cow-level and explainability
+          layers of the twin almost exactly.
+        </p>
+      </article>
+    </div>
+    <p class="muted">
+      Four months is a deliberately modest scope: long enough to deliver a working
+      prototype, a benchmark and a co-authored paper; short enough to fit additively
+      into the host group&rsquo;s existing roadmap.
+    </p>
+  </section>
+
+  <!-- ===================== MULTIPLIER ===================== -->
+  <section>
+    <h2>What the stay leaves behind &mdash; on both sides</h2>
+    <p>
+      The stay is designed so that both the host institution and the Czech research base
+      have something durable to build on afterwards.
+    </p>
+    <ul>
+      <li>A <strong>peer-reviewed publication</strong> on the design and validation of the
+        twin, with co-authorship for members of the host group secured from the outset.
+        This anchors a long-term research relationship between the host institution and
+        CULS&nbsp;/&nbsp;&Uacute;TIA.</li>
+      <li>An <strong>open prototype</strong> hardened to a level at which a company or
+        start-up &mdash; in the United States, in the Czech Republic, or jointly &mdash;
+        could adopt it as the basis of a deployment, in the spirit of a grant whose output
+        is a usable technology rather than a closed report.</li>
+      <li>A <strong>reproducible public benchmark</strong> over open dairy datasets
+        (Zenodo, Agroscope, INRAE, Teagasc, data.gov.ie) that other groups can build on.</li>
+    </ul>
+    <p>
+      Together they translate a four-month visit into a multi-year contribution to
+      Czech&ndash;U.S.&nbsp;scientific cooperation and to the modernisation of Central
+      European dairy agriculture.
+    </p>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about" class="about">
+    <h2>About the applicant</h2>
+    <div class="about-grid">
+      <div class="about-photo">
+        <img src="assets/photo.jpg" alt="Portrait of Jan Saro" loading="lazy">
+      </div>
+      <div class="about-text">
+        <h3>Jan Saro, Ph.D., MBA</h3>
+        <p class="about-affil">
+          Assistant Professor &middot; Czech University of Life Sciences Prague<br>
+          Junior Researcher &middot; Institute of Information Theory and Automation,
+          Czech Academy of Sciences
+        </p>
+        <p>
+          I work at the intersection of artificial intelligence, machine learning,
+          operations research and decision-support systems, with applications in dairy
+          production and sustainable agriculture. My research emphasises predictive
+          modelling, stochastic and Markov processes, and deployable data-driven tools
+          that translate state-of-the-art AI into something a working farmer can
+          actually use. I am a builder by temperament; applied AI is also a personal
+          enthusiasm of mine outside working hours.
+        </p>
+        <p>
+          I defended my Ph.D. in Systems Engineering at the Czech University of Life
+          Sciences in 2025, was a finalist of Falling Walls Lab Czech Republic 2024 with
+          a talk on the dairy-farmer AI assistant, and have been awarded the Dean&rsquo;s
+          Prize for the best Ph.D. publication at FEM CULS.
+        </p>
+        <ul class="contact">
+          <li><span class="k">Email</span>
+              <a href="mailto:sarojanek@gmail.com">sarojanek@gmail.com</a></li>
+          <li><span class="k">ORCID</span>
+              <a href="https://orcid.org/0009-0001-4355-5271">0009-0001-4355-5271</a></li>
+          <li><span class="k">Falling Walls</span>
+              <a href="https://www.falling-walls.cz/speakers-2024">speakers&nbsp;2024</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <p>
+      &copy; <span id="year"></span> Jan Saro. Application materials prepared for the
+      Fulbright&ndash;Masaryk Postdoctoral Fellowship.
+    </p>
+  </footer>
+
+</main>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
